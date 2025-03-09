@@ -10,9 +10,11 @@
     let isLoading = $state(true);
     let error = $state(null);
 
+
     // Subscribe to the store and keep our local state in sync
     $effect(() => {
         const storeData = $commentStore;
+        console.log(`Store Data = >${ JSON.stringify(storeData)}`)
         comments = storeData.comments || [];
         isLoading = storeData.loading;
         error = storeData.error;
