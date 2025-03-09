@@ -4,14 +4,13 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "syntaxsnark",
+	"name": "syntax_snark",
 	"compatibility_date": "2025-03-03",
 	"pages_build_output_dir": ".svelte-kit/cloudflare",
-	"workers_dev": false,
+	
 	"observability": {
 		"enabled": true
 	},
-	"routes": [{"custom_domain": true, "pattern": "syntaxsnark.ronnelson.dev/*"}],
 	"services": [
     {
       "binding": "sarcasm",
