@@ -7,7 +7,6 @@
     // Using reactivity to keep our local component in sync with the store
     $effect(() => {
         const storeData = $commentStore;
-        console.log(`store data ${JSON.stringify(storeData)}`)
         if (!storeData.loading && !storeData.error && storeData.comments) {
             // Access the comments array inside the store data
             const currentComment = storeData.comments.find(c => c.id === comment.id);
@@ -28,14 +27,14 @@
 </script>
 
 <Card>
-    <div class="p-4 space-y-4 rounded-md border-orange-400">
+    <div class="bg-gray-100 p-4 space-y-4 rounded-lg border-orange-400">
         <!-- prompt -->
         <div class="text-2xl text-blue-500">
             {comment.prompt}
         </div>
         <!-- sarcastic comment-->
         <div class="mx-auto">
-            <p class="font-normal text-gray-500">
+            <p class="font-normal text-black-100">
                 {comment.sarcaticComment}
             </p>
         </div>
