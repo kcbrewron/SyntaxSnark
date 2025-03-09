@@ -26,7 +26,7 @@
     }
 </script>
 
-<Card class="bg-gray-100  rounded-lg border-y-orange-500 hover:drop-shadow-lg">
+<Card class="bg-gray-100  rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg">
     <div class="space-y-4">
         <!-- prompt -->
         <div class="text-2xl text-blue-500">
