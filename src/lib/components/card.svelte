@@ -42,10 +42,10 @@
         <div class="w-full">
             <div class="text-md">{comment.likes} Likes
             <button 
-                class="bg-orange-400 p-2 rounded-md hover:bg-orange-500 text-white" 
+                class="bg-orange-500 p-2 rounded-md hover:bg-orange-500 text-white" 
                 onclick={() => like(comment.id)}
             >
-                <ThumbsUpSolid class="w-6 h-6 ms-2.5" />
+                <ThumbsUpSolid class="w-6 h-6" />
             </button>
         </div>
         </div>

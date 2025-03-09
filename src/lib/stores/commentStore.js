@@ -60,6 +60,7 @@ const createCommentStore = () => {
     
     // Increment likes for a comment
     incrementLike: async (id) => {
+      console.log(`Update Likes for ${id}`)
       let updatedComment;
       
       // Update in local store first (optimistic update)
