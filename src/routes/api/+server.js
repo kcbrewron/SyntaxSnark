@@ -36,7 +36,7 @@ export async function POST({ request, platform }) {  // Fix: use request instead
 
     // Call the external API with the correct format
     const result = await sarcasm.fetch(
-      `https://ai-sarcasm-generator.ronnelson.workers.dev/api/sarcasm`,
+      `https://ai-sarcasm-generator.ronnelson.workers.dev/api/sarcasm/generate`,
       {
         method: 'POST',
         headers: {
