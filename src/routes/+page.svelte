@@ -14,9 +14,7 @@
     // Subscribe to the store and keep our local state in sync
     $effect(() => {
         const storeData = $commentStore;
-        console.log(`Store Data = >${ JSON.stringify(storeData)}`)
         comments = storeData.comments || [];
-        console.log(`Comments Data = >${ JSON.stringify(comments)}`)
         isLoading = storeData.loading;
         error = storeData.error;
     });

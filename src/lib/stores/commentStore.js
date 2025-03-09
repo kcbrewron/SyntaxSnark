@@ -26,16 +26,16 @@ const createCommentStore = () => {
           throw new Error(`Failed to fetch data: ${response.status}`);
         }
         console.log( `Inside store results =>${JSON.stringify(response)}`);
-        const comments = await response.json();
+        const {results} = await response.json();
         
         // Update store with fetched data
         update(state => ({
-          comments: comments.results,
+          comments: results,
           loading: false,
           error: null
         }));
-        
-        return comments.results;
+
+        return results;
       } catch (error) {
         console.error('Failed to initialize comment store:', error);
         
