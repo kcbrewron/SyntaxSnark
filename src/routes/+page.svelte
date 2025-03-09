@@ -16,6 +16,7 @@
         const storeData = $commentStore;
         console.log(`Store Data = >${ JSON.stringify(storeData)}`)
         comments = storeData.comments || [];
+        console.log(`Comments Data = >${ JSON.stringify(comments)}`)
         isLoading = storeData.loading;
         error = storeData.error;
     });
