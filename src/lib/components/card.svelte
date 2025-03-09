@@ -33,7 +33,7 @@
 >
     <div class="space-y-4">
         <!-- prompt -->
-        <div class="text-2xl text-blue-500">
+        <div class="text-xl text-semibold text-blue-500">
             {comment.prompt}
         </div>
         <!-- sarcastic comment-->
