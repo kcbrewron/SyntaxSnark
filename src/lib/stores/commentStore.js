@@ -30,12 +30,12 @@ const createCommentStore = () => {
         
         // Update store with fetched data
         update(state => ({
-          comments: comments,
+          comments: comments.results,
           loading: false,
           error: null
         }));
         
-        return comments;
+        return comments.results;
       } catch (error) {
         console.error('Failed to initialize comment store:', error);
         
