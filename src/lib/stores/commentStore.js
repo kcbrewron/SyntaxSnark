@@ -25,7 +25,7 @@ const createCommentStore = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.status}`);
         }
-        
+        console.log( `Inside store results =>${JSON.stringify(response)}`);
         const comments = await response.json();
         
         // Update store with fetched data

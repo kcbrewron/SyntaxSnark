@@ -9,12 +9,23 @@ export async function GET({ platform }) {
 
     //GET all comments from the database
     const result = await sarcasm.fetch(`https://ai-sarcasm-generator.ronnelson.workers.dev/api/sarcasm`);
+    if (result.ok) {
+      console.log(`Successfully received initial load of comments`);
+      const comments = await result.json();
+      console.log(`Comments => ${JSON.stringify(comments)}`)
 
-    return new Response(JSON.stringify(result), {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+      return new Response(JSON.stringify(comments), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }else { 
+      console.log(`Bad response received`);
+      return new Response(JSON.stringify({}),{
+        headers: { 'Content-Type': 'application/json'}
+      })
+    }
+
   } catch (error) {
     console.error('API Error:', error);
     return new Response(JSON.stringify({ error: 'Failed to update like count' }), {
@@ -48,7 +59,8 @@ export async function POST({ request, platform }) {  // Fix: use request instead
 
     // Parse the JSON response from the external API
     const jsonResult = await result.json();
-
+    console.log(`Successfully created sarcasm snark`);
+    console.log(`results=> ${JSON.stringify(jsonResult)}`)
     return new Response(JSON.stringify(jsonResult), {
       headers: {
         'Content-Type': 'application/json'
