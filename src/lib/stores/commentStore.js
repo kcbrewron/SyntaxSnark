@@ -83,7 +83,7 @@ const createCommentStore = () => {
       // Call API to update database
       try {
         const response = await fetch(`/api/${id}`, {
-          method: 'POST',
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           }
