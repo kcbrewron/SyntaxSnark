@@ -84,10 +84,10 @@
                 id="prompt"
                 name="prompt"
                 placeholder="What's challenging you today?"
-                class="w-1/2 mx-auto p-4 border border-blue-500 focus:outline-blue-500 bg-gray-100 rounded-md"
+                class="w-1/2 mx-auto p-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
             />
             <button
-                class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-md text-white"
+                class="bg-blue-500 hover:bg-blue-400 px-4 py-2 drop-shadow:md hover:drop-shadow-xl rounded-md text-white"
                 onclick={() => generate()}
                 disabled={isLoading || !prompt}
             >
