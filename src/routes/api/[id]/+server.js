@@ -8,8 +8,7 @@ export async function PATCH({ params, platform }) {
     try {
       // Access Cloudflare binding from platform.env
       const { sarcasm } = platform.env;
-      // This is an example - you'll need to adjust based on your actual DB structure
-      const result = await sarcasm.fetch(`https://ai-sarcasm-generator.ronnelson.workers.dev/api/sarcasm/${id}`);
+      const result = await sarcasm.fetch(`https://ai-sarcasm-generator.ronnelson.workers.dev/api/sarcasm/${id}`,{method: 'PATCH'});
       console.log(`LIKE Response =>${JSON.stringify(result)}`)
       return new Response(JSON.stringify(result), {
         headers: {
