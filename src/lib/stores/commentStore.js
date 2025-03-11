@@ -53,7 +53,7 @@ const createCommentStore = () => {
 
         // Update store with fetched data and liked items
         update(state => ({
-          comments: comments,
+          comments: results,
           loading: false,
           error: null,
           likedItems: likedItems
