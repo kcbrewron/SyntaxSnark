@@ -2,7 +2,7 @@
 <script>
     import { onMount } from "svelte";
     import CardList from "../lib/components/cardList.svelte";
-    import { commentStore } from "$lib/stores/commentStore.js";
+    import { sortedComments, commentStore } from '$lib/stores/commentStore';
 
     let pageTitle = "SyntaxSnark - Sarcastic Code Comments";
     let prompt = $state("");
@@ -13,7 +13,7 @@
 
     // Subscribe to the store and keep our local state in sync
     $effect(() => {
-        const storeData = $commentStore;
+        const storeData = $sortedComments;
         comments = storeData.comments || [];
         isLoading = storeData.loading;
         error = storeData.error;

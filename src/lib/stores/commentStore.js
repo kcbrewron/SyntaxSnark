@@ -1,5 +1,5 @@
 // src/lib/stores/commentStore.js
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 
 const LIKED_ITEMS_KEY = 'syntax-snark-liked-items';
 
@@ -47,19 +47,23 @@ const createCommentStore = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.status}`);
         }
-        console.log( `Inside store results =>${JSON.stringify(response)}`);
+        console.log(`Inside store results =>${JSON.stringify(response)}`);
         const {results} = await response.json();
+        console.log(`Results ${results}`);
         const likedItems = getLikedItems();
 
-        // Update store with fetched data and liked items
+        // Sort the results by likes in descending order
+        const sortedResults = [...results].sort((a, b) => b.likes - a.likes);
+
+        // Update store with fetched and sorted data
         update(state => ({
-          comments: results,
+          comments: sortedResults,
           loading: false,
           error: null,
           likedItems: likedItems
         }));
 
-        return results;
+        return sortedResults;
       } catch (error) {
         console.error('Failed to initialize comment store:', error);
         
@@ -77,15 +81,21 @@ const createCommentStore = () => {
     
     // Add a new comment
     addComment: (comment) => {
-      update(state => ({
-        ...state,
-        comments: [...state.comments, comment]
-      }));
+      update(state => {
+        // Add the comment then re-sort the array
+        const updatedComments = [...state.comments, comment]
+          .sort((a, b) => b.likes - a.likes);
+        
+        return {
+          ...state,
+          comments: updatedComments
+        };
+      });
     },
     
     // Increment likes for a comment
     incrementLike: async (id) => {
-      console.log(`Update Likes for ${id}`)
+      console.log(`Update Likes for ${id}`);
       const likedItems = getLikedItems();
 
       if (likedItems.includes(id)) {
@@ -106,7 +116,7 @@ const createCommentStore = () => {
       let updatedComment;
       // Update in local store first (optimistic update)
       update(state => {
-        console.log(`state input error when processing below function ${JSON.stringify(state)}`)
+        console.log(`state input error when processing below function ${JSON.stringify(state)}`);
         const updatedComments = state.comments.map(comment => {
           if (comment.id === id) {
             updatedComment = { ...comment, likes: comment.likes + 1 };
@@ -115,9 +125,12 @@ const createCommentStore = () => {
           return comment;
         });
         
+        // Sort the updated comments by likes
+        const sortedComments = updatedComments.sort((a, b) => b.likes - a.likes);
+        
         return {
           ...state,
-          comments: updatedComments
+          comments: sortedComments
         };
       });
       
@@ -155,9 +168,12 @@ const createCommentStore = () => {
             return comment;
           });
           
+          // Re-sort after reverting
+          const sortedComments = revertedComments.sort((a, b) => b.likes - a.likes);
+          
           return {
             ...state,
-            comments: revertedComments
+            comments: sortedComments
           };
         });
         
@@ -172,6 +188,13 @@ const createCommentStore = () => {
 };
 
 export const commentStore = createCommentStore();
+
+// Create a derived store that always gives the sorted comments
+export const sortedComments = derived(
+  commentStore,
+  $store => $store.comments
+  // No need to sort here as we're now sorting in the main store
+);
 
 // Auto-initialize the store if needed
 // You can remove this if you prefer to initialize manually

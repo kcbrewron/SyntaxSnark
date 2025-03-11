@@ -1,14 +1,14 @@
 <script>
     import { Card } from "flowbite-svelte";
     import { ThumbsUpSolid } from "flowbite-svelte-icons";
-    import { commentStore } from "$lib/stores/commentStore.js";
+    import { sortedComments, commentStore } from '$lib/stores/commentStore';
 
     let { comment } = $props();
     let hasLiked = $state(false);
 
     // Using reactivity to keep our local component in sync with the store
     $effect(() => {
-        const storeData = $commentStore;
+        const storeData = $sortedComments;
         if (!storeData.loading && !storeData.error && storeData.comments) {
             // Access the comments array inside the store data
             const currentComment = storeData.comments.find(
@@ -30,7 +30,7 @@
         }
 
         try {
-            const success = await commentStore.incrementLike(id);
+            const success = await sortedComments.incrementLike(id);
             if (success) {
                 hasLiked = true;
             }
