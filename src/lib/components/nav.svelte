@@ -4,7 +4,7 @@
     $: activeUrl = $page.url.pathname;
   </script>
   
-  <Navbar class="w-full mx-auto px-20 pt-4 bg-blue-500 border-b-orange-500 border-b-4">
+  <Navbar class="w-full mx-auto md:px-20 sm:px-4 pt-4 bg-blue-500 border-b-orange-500 border-b-4">
     <NavBrand href="/">
       <!-- <img src="/images/flowbite-svelte-icon-logo.svg" class="me-3 h-6 sm:h-9" alt="Flowbite Logo" /> -->
       <span class="self-center text-white whitespace-nowrap text-4xl drop-shadow-xl font-semibold">SyntaxSnark <br/>
