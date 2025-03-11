@@ -4,6 +4,8 @@
     import { commentStore } from "$lib/stores/commentStore.js";
 
     let { comment } = $props();
+    let hasLiked = $state(false);
+
     // Using reactivity to keep our local component in sync with the store
     $effect(() => {
         const storeData = $commentStore;
@@ -15,21 +17,31 @@
             if (currentComment) {
                 comment = currentComment;
             }
+
+            // Check if this comment has been liked by the user
+            hasLiked = storeData.likedItems.includes(comment.id);
         }
     });
 
     async function like(id) {
+        if (hasLiked) {
+            // Don't allow multiple likes
+            return;
+        }
+
         try {
-            await commentStore.incrementLike(id);
+            const success = await commentStore.incrementLike(id);
+            if (success) {
+                hasLiked = true;
+            }
         } catch (error) {
             console.error("Failed to like comment:", error);
-            // Optionally add user feedback for errors
         }
     }
 </script>
 
 <Card
-    class="bg-gray-100  rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg"
+    class="bg-gray-100 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg"
 >
     <div class="space-y-4">
         <!-- prompt -->
