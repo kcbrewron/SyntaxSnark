@@ -41,7 +41,7 @@
 </script>
 
 <Card
-    class="bg-gray-100 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg"
+    class="bg-gray-100 sm:m-2 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg"
 >
     <div class="space-y-4">
         <!-- prompt -->
