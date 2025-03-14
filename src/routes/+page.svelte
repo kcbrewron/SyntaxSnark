@@ -77,7 +77,7 @@
         </p>
     </div>
     <div class="max-w-4xl mx-auto py-4">
-        <div class="text-center mb-12">
+        <div class="text-center sm:mb-4 md:mb-6 space-y-4">
             <input
                 bind:value={prompt}
                 type="text"
