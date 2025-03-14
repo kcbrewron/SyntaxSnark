@@ -69,7 +69,7 @@
 </svelte:head>
 
 <div class="max-w-4xl mx-auto py-8">
-    <div class="text-center sm:w-1/2 mb-6">
+    <div class="text-center  md:w-3/4 mb-6">
         <p
             class="text-xl text-light-text-secondary dark:text-dark-text-secondary"
         >

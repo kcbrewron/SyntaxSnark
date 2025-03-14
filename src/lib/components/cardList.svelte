@@ -5,7 +5,7 @@
 
     let {comments} = $props();
 </script>
-<div class="md:w-7/8 sm:w-full">
+<div class="w-3/4 sm:w-full">
     <div transition:fade class="xl:grid xl:grid-cols-3 xl:gap-4 sm:grid sm:grid-cols-1">
     {#each comments as comment }
         <Card class="pb-2" comment={comment} />
