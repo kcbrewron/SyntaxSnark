@@ -82,9 +82,6 @@ export async function handle({ event, resolve }) {
  * @returns {string} A random base64 string
  */
 function generateNonce() {
-  // Import crypto in Node.js environment
-  const crypto = require('crypto');
-  
   // Generate a random 16-byte buffer
   const buffer = crypto.randomBytes(16);
   
