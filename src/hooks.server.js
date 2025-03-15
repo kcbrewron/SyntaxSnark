@@ -10,9 +10,9 @@ export async function handle({ event, resolve }) {
       // Default policies
       "default-src 'self'",
       // Scripts - only allow from same origin and inline scripts with nonce
-      "script-src 'self' 'unsafe-inline'", 
+      "script-src 'self'", 
       // Styles - allow from same origin and inline styles
-      "style-src 'self' 'unsafe-inline'",
+      "style-src 'self'",
       // Images - allow from same origin and data URLs
       "img-src 'self' data:",
       // Fonts - allow from same origin
