@@ -84,7 +84,7 @@
         </p>
     </div>
     <div class="max-w-4xl mx-auto py-4">
-        <div class="text-center sm:mb-4 md:mb-6 space-y-4">
+        <div class="text-center mb-4 md:mb-6 mx-4 space-y-4">
             <input
                 bind:value={prompt}
                 type="text"
@@ -92,7 +92,7 @@
                 name="prompt"
                 placeholder="What's challenging you today?"
                 onkeydown={handleKeydown}
-                class="w-full mx-auto m-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
+                class="w-full mx-auto border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
             />
         </div>
     </div>
