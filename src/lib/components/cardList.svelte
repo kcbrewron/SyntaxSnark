@@ -39,15 +39,15 @@
     });
 </script>
 
-<div class="w-3/4 sm:w-full">
+<div class="w-full mx-auto">
     <CategoryFilter 
         categories={allCategories} 
         selectedCategory={selectedCategory}
     />
     
-    <div transition:fade class="xl:grid xl:grid-cols-3 xl:gap-4 sm:grid sm:grid-cols-1 mt-4">
+    <div transition:fade class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 sm:px-6">
     {#each filteredComments as comment }
-        <Card class="pb-2" comment={comment} />
+        <Card comment={comment} />
     {/each}
     </div>
 </div>

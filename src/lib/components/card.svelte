@@ -41,9 +41,9 @@
 </script>
 
 <Card
-    class="bg-gray-100 sm:m-2 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg flex flex-col h-full"
+    class="bg-gray-100 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg flex flex-col h-full mb-4"
 >
-    <div class="flex flex-col h-full justify-between">
+    <div class="flex flex-col h-full justify-between p-4">
         <div class="space-y-4">
             <!-- prompt -->
             <div class="text-xl text-semibold text-blue-500">

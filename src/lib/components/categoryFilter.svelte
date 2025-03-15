@@ -25,7 +25,7 @@
     }
 </script>
 
-<div class="category-filter mb-4">
+<div class="category-filter mb-4 px-4 sm:px-6">
     <div class="flex justify-between items-center mb-2">
         <button 
             class="text-blue-500 hover:text-blue-700 font-medium"
