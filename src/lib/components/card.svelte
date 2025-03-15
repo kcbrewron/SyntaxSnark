@@ -41,21 +41,24 @@
 </script>
 
 <Card
-    class="bg-gray-100 sm:m-2 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg"
+    class="bg-gray-100 sm:m-2 rounded-lg border-y-orange-500 border-y-4 border-x-transparent hover:drop-shadow-lg flex flex-col h-full"
 >
-    <div class="space-y-4">
-        <!-- prompt -->
-        <div class="text-xl text-semibold text-blue-500">
-            {comment.prompt}
+    <div class="flex flex-col h-full justify-between">
+        <div class="space-y-4">
+            <!-- prompt -->
+            <div class="text-xl text-semibold text-blue-500">
+                {comment.prompt}
+            </div>
+            <!-- sarcastic comment-->
+            <div class="mx-auto">
+                <p class="font-normal text-black-100">
+                    {comment.sarcaticComment}
+                </p>
+            </div>
         </div>
-        <!-- sarcastic comment-->
-        <div class="mx-auto">
-            <p class="font-normal text-black-100">
-                {comment.sarcaticComment}
-            </p>
-        </div>
-        <!-- like -->
-        <div class="flex justify-between items-center w-full">
+        
+        <!-- like - pinned to bottom -->
+        <div class="flex justify-between items-center w-full mt-4">
             <div class="text-md">
                 {#if comment.likes === 1}
                     <span>{comment.likes} Like</span>
