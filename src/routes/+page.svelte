@@ -84,7 +84,7 @@
         </p>
     </div>
     <div class="max-w-4xl mx-auto py-4">
-        <div class="text-center mb-4 md:mb-6 mx-4 space-y-4">
+        <div class="text-center px-6 sm:mb-4 md:mb-6 space-y-4">
             <input
                 bind:value={prompt}
                 type="text"
