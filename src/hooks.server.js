@@ -78,15 +78,16 @@ export async function handle({ event, resolve }) {
 }
 
 /**
- * Generate a random nonce for CSP
+ * Generate a random nonce for CSP using Web Crypto API
  * @returns {string} A random base64 string
  */
 function generateNonce() {
-  // Generate a random 16-byte buffer
-  const buffer = crypto.randomBytes(16);
+  // Use Web Crypto API which is available in Cloudflare Workers/Pages
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
   
   // Convert to base64 and make URL safe
-  return buffer.toString('base64')
+  return btoa(String.fromCharCode.apply(null, array))
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=/g, '');
