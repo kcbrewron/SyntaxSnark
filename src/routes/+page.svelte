@@ -92,7 +92,7 @@
                 name="prompt"
                 placeholder="What's challenging you today?"
                 onkeydown={handleKeydown}
-                class="w-full mx-auto p-4 mx-2 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
+                class="w-full mx-auto m-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
             />
         </div>
     </div>
