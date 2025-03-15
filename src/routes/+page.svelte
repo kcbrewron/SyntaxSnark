@@ -33,12 +33,14 @@
         }
 
         try {
+            // Set loading state while generating
+            isLoading = true;
+            
             const response = await fetch("/api", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                // Fix: Don't nest the prompt object unnecessarily
                 body: JSON.stringify({ prompt: prompt }),
             });
 
@@ -46,16 +48,27 @@
                 throw new Error("Failed to generate comment");
             }
 
-            const newComment = await response.json();
+            const data = await response.json();
+            
+            // Ensure we have a properly structured comment object
+            const newComment = {
+                id: data.id || `temp-${Date.now()}`,
+                prompt: prompt, // Use the prompt we sent
+                sarcaticComment: data.sarcaticComment || data.sarcasticComment || data.comment || data.text || '',
+                categories: Array.isArray(data.categories) ? data.categories : [],
+                likes: typeof data.likes === 'number' ? data.likes : 0
+            };
 
             // Add the new comment to the store
             commentStore.addComment(newComment);
 
             // Clear the prompt input
             prompt = "";
+            isLoading = false;
         } catch (err) {
             console.error("Error generating comment:", err);
             error = "Failed to generate comment. Please try again.";
+            isLoading = false;
         }
     }
 

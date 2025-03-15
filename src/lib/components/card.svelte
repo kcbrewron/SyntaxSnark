@@ -23,6 +23,21 @@
         }
     });
 
+    // Ensure comment has all required fields with fallbacks
+    $effect(() => {
+        if (comment) {
+            // Ensure likes exists
+            if (comment.likes === undefined) {
+                comment = { ...comment, likes: 0 };
+            }
+            
+            // Ensure categories exists
+            if (!comment.categories) {
+                comment = { ...comment, categories: [] };
+            }
+        }
+    });
+
     async function like(id) {
         if (hasLiked) {
             // Don't allow multiple likes
@@ -47,12 +62,12 @@
         <div class="space-y-4">
             <!-- prompt -->
             <div class="text-xl text-semibold text-blue-500">
-                {comment.prompt}
+                {comment.prompt || "No prompt provided"}
             </div>
             <!-- sarcastic comment-->
             <div class="mx-auto">
                 <p class="font-normal text-black-100">
-                    {comment.sarcaticComment}
+                    {comment.sarcaticComment || comment.sarcasticComment || comment.comment || "No comment generated"}
                 </p>
             </div>
             

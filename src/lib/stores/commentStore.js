@@ -42,6 +42,18 @@ const extractCategories = (comments) => {
   return ["All", ...Array.from(categories)].sort();
 };
 
+// Helper function to normalize comment data
+const normalizeComment = (comment) => {
+  // Ensure the comment has all required fields
+  return {
+    id: comment.id || `temp-${Date.now()}`,
+    prompt: comment.prompt || '',
+    sarcaticComment: comment.sarcaticComment || comment.sarcasticComment || comment.comment || '',
+    categories: Array.isArray(comment.categories) ? comment.categories : [],
+    likes: typeof comment.likes === 'number' ? comment.likes : 0
+  };
+};
+
 // Create the store with loading state
 const createCommentStore = () => {
   // Add loading state to track initialization
@@ -71,8 +83,9 @@ const createCommentStore = () => {
         const {results} = await response.json();
         const likedItems = getLikedItems();
 
-        // Sort the results by likes in descending order
-        const sortedResults = sortByLikes(results);
+        // Normalize and sort the results
+        const normalizedResults = results.map(comment => normalizeComment(comment));
+        const sortedResults = sortByLikes(normalizedResults);
         
         // Extract categories
         const categories = extractCategories(sortedResults);
@@ -105,8 +118,11 @@ const createCommentStore = () => {
     // Add a new comment
     addComment: (comment) => {
       update(state => {
+        // Normalize the comment data
+        const normalizedComment = normalizeComment(comment);
+        
         // Add the comment then sort the array
-        const updatedComments = sortByLikes([...state.comments, comment]);
+        const updatedComments = sortByLikes([...state.comments, normalizedComment]);
         
         // Update categories
         const updatedCategories = extractCategories(updatedComments);
