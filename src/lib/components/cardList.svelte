@@ -1,5 +1,6 @@
 <script>
     import { fade } from 'svelte/transition';
+    import { onMount } from 'svelte';
     import Card from "./card.svelte";
     import CategoryFilter from "./categoryFilter.svelte";
     import { commentStore, categories as storeCategories } from '$lib/stores/commentStore';
@@ -24,16 +25,24 @@
             : comments;
     });
 
-    function handleCategoryChange(event) {
-        selectedCategory = event.detail.category;
-    }
+    // Listen for category change events
+    onMount(() => {
+        const handleCategoryChange = (event) => {
+            selectedCategory = event.detail.category;
+        };
+        
+        document.addEventListener('categoryChange', handleCategoryChange);
+        
+        return () => {
+            document.removeEventListener('categoryChange', handleCategoryChange);
+        };
+    });
 </script>
 
 <div class="w-3/4 sm:w-full">
     <CategoryFilter 
         categories={allCategories} 
         selectedCategory={selectedCategory}
-        on:categoryChange={handleCategoryChange}
     />
     
     <div transition:fade class="xl:grid xl:grid-cols-3 xl:gap-4 sm:grid sm:grid-cols-1 mt-4">
