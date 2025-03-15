@@ -1,16 +1,16 @@
 <script>
     import { Card } from "flowbite-svelte";
     import { ThumbsUpSolid } from "flowbite-svelte-icons";
-    import { sortedComments, commentStore } from '$lib/stores/commentStore';
+    import { commentStore } from '$lib/stores/commentStore';
 
     let { comment } = $props();
     let hasLiked = $state(false);
 
     // Using reactivity to keep our local component in sync with the store
     $effect(() => {
-        const storeData = $sortedComments;
-        if (!storeData.loading && !storeData.error && storeData.comments) {
-            // Access the comments array inside the store data
+        const storeData = $commentStore;
+        if (!storeData.loading && !storeData.error) {
+            // Find the current comment in the store
             const currentComment = storeData.comments.find(
                 (c) => c.id === comment.id,
             );
@@ -19,7 +19,7 @@
             }
 
             // Check if this comment has been liked by the user
-            hasLiked = storeData.likedItems.includes(comment.id);
+            hasLiked = commentStore.hasLiked(comment.id);
         }
     });
 
@@ -30,7 +30,7 @@
         }
 
         try {
-            const success = await sortedComments.incrementLike(id);
+            const success = await commentStore.incrementLike(id);
             if (success) {
                 hasLiked = true;
             }
@@ -55,24 +55,22 @@
             </p>
         </div>
         <!-- like -->
-        <div class="text-md w-full space-x-8">
-            {#if comment.likes === 1}
-                <span class="inline-block align-middle">
-                    {comment.likes} Like
-                </span>
-            {:else}
-                <span class="inline-block align-middle">
-                    {comment.likes} Likes
-                </span>
-            {/if}
-            <span class="inline-block align-middle">
-                <button
-                    class="bg-orange-500 p-2 rounded-md hover:bg-orange-500 text-white"
-                    onclick={() => like(comment.id)}
-                >
-                    <ThumbsUpSolid class="w-6 h-6" />
-                </button>
-            </span>
+        <div class="flex justify-between items-center w-full">
+            <div class="text-md">
+                {#if comment.likes === 1}
+                    <span>{comment.likes} Like</span>
+                {:else}
+                    <span>{comment.likes} Likes</span>
+                {/if}
+            </div>
+            <button
+                class="bg-orange-500 p-2 rounded-md hover:bg-orange-400 text-white disabled:bg-gray-300 disabled:cursor-not-allowed"
+                onclick={() => like(comment.id)}
+                disabled={hasLiked}
+                title={hasLiked ? "You've already liked this comment" : "Like this comment"}
+            >
+                <ThumbsUpSolid class="w-6 h-6" />
+            </button>
         </div>
     </div>
 </Card>
