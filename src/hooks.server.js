@@ -1,18 +1,31 @@
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
-  // Response object
-  const response = await resolve(event);
+  // Generate a unique nonce for this request
+  const nonce = generateNonce();
   
-  // Content Security Policy
+  // Add the nonce to the event.locals so it can be accessed in layouts/pages
+  event.locals.cspNonce = nonce;
+  
+  // Set CSP nonce in response headers
+  const response = await resolve(event, {
+    transformPageChunk: ({ html }) => {
+      // Add nonce to all script and style tags
+      return html
+        .replace(/<script\b/g, `<script nonce="${nonce}"`)
+        .replace(/<style\b/g, `<style nonce="${nonce}"`);
+    }
+  });
+  
+  // Content Security Policy with nonce
   response.headers.set(
     'Content-Security-Policy',
     [
       // Default policies
       "default-src 'self'",
-      // Scripts - only allow from same origin and inline scripts with nonce
-      "script-src 'self'", 
-      // Styles - allow from same origin and inline styles
-      "style-src 'self'",
+      // Scripts - allow from same origin and with specific nonce
+      `script-src 'self' 'nonce-${nonce}'`, 
+      // Styles - allow from same origin with nonce
+      `style-src 'self' 'nonce-${nonce}'`,
       // Images - allow from same origin and data URLs
       "img-src 'self' data:",
       // Fonts - allow from same origin
@@ -62,4 +75,22 @@ export async function handle({ event, resolve }) {
   );
   
   return response;
+}
+
+/**
+ * Generate a random nonce for CSP
+ * @returns {string} A random base64 string
+ */
+function generateNonce() {
+  // Import crypto in Node.js environment
+  const crypto = require('crypto');
+  
+  // Generate a random 16-byte buffer
+  const buffer = crypto.randomBytes(16);
+  
+  // Convert to base64 and make URL safe
+  return buffer.toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
 } 
