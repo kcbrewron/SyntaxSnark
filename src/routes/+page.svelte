@@ -78,7 +78,7 @@
 <div class="max-w-4xl mx-auto py-8">
     <div class="text-center mx-auto px-4 mb-6">
         <p
-            class="text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-md md:w-3/4 sm:w-full mx-auto"
+            class="text-xl text-light-text-secondary dark:text-dark-text-secondary w-full md:w-3/4 sm:w-full mx-auto"
         >
             Generate snarky comments to brighten your day
         </p>
@@ -92,7 +92,7 @@
                 name="prompt"
                 placeholder="What's challenging you today?"
                 onkeydown={handleKeydown}
-                class="w-1/2 sm:w-full mx-auto p-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
+                class="w-full mx-auto p-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
             />
         </div>
     </div>
