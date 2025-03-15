@@ -58,6 +58,13 @@
             error = "Failed to generate comment. Please try again.";
         }
     }
+
+    // Handle Enter key press
+    function handleKeydown(event) {
+        if (event.key === 'Enter' && prompt.trim() !== "") {
+            generate();
+        }
+    }
 </script>
 
 <svelte:head>
@@ -69,9 +76,9 @@
 </svelte:head>
 
 <div class="max-w-4xl mx-auto py-8">
-    <div class="text-center  md:w-3/4 mb-6">
+    <div class="text-center mx-auto px-4 mb-6">
         <p
-            class="text-xl text-light-text-secondary dark:text-dark-text-secondary"
+            class="text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-md mx-auto"
         >
             Generate snarky comments to brighten your day
         </p>
@@ -84,15 +91,9 @@
                 id="prompt"
                 name="prompt"
                 placeholder="What's challenging you today?"
+                onkeydown={handleKeydown}
                 class="w-1/2 sm:w-full mx-auto p-4 border border-blue-500 drop-shadow:md focus:outline-blue-500 focus:drop-shadow-xl bg-gray-100 rounded-md"
             />
-            <button
-                class="bg-blue-500 hover:bg-blue-400 px-4 py-2 drop-shadow:md hover:drop-shadow-xl rounded-md text-white"
-                onclick={() => generate()}
-                disabled={isLoading || !prompt}
-            >
-                {isLoading ? "Loading..." : "Submit"}
-            </button>
         </div>
     </div>
 

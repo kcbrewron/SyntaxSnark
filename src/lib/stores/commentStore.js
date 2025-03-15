@@ -22,6 +22,11 @@ const saveLikedItem = (id) => {
   }
 };
 
+// Helper function to sort comments by likes
+const sortByLikes = (comments) => {
+  return [...comments].sort((a, b) => b.likes - a.likes);
+};
+
 // Create the store with loading state
 const createCommentStore = () => {
   // Add loading state to track initialization
@@ -51,7 +56,7 @@ const createCommentStore = () => {
         const likedItems = getLikedItems();
 
         // Sort the results by likes in descending order
-        const sortedResults = [...results].sort((a, b) => b.likes - a.likes);
+        const sortedResults = sortByLikes(results);
 
         // Update store with fetched and sorted data
         update(state => ({
@@ -80,15 +85,22 @@ const createCommentStore = () => {
     // Add a new comment
     addComment: (comment) => {
       update(state => {
-        // Add the comment then re-sort the array
-        const updatedComments = [...state.comments, comment]
-          .sort((a, b) => b.likes - a.likes);
+        // Add the comment then sort the array
+        const updatedComments = sortByLikes([...state.comments, comment]);
         
         return {
           ...state,
           comments: updatedComments
         };
       });
+    },
+    
+    // Sort comments by likes (can be called manually if needed)
+    sortComments: () => {
+      update(state => ({
+        ...state,
+        comments: sortByLikes(state.comments)
+      }));
     },
     
     // Increment likes for a comment
@@ -124,7 +136,7 @@ const createCommentStore = () => {
         });
         
         // Sort the updated comments by likes
-        const sortedComments = updatedComments.sort((a, b) => b.likes - a.likes);
+        const sortedComments = sortByLikes(updatedComments);
         
         return {
           ...state,
@@ -167,7 +179,7 @@ const createCommentStore = () => {
           });
           
           // Re-sort after reverting
-          const sortedComments = revertedComments.sort((a, b) => b.likes - a.likes);
+          const sortedComments = sortByLikes(revertedComments);
           
           return {
             ...state,
@@ -190,8 +202,7 @@ export const commentStore = createCommentStore();
 // Create a derived store that always gives the sorted comments
 export const sortedComments = derived(
   commentStore,
-  $store => $store.comments
-  // No need to sort here as we're now sorting in the main store
+  $store => sortByLikes($store.comments)
 );
 
 // Auto-initialize the store if needed
