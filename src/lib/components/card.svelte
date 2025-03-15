@@ -55,6 +55,17 @@
                     {comment.sarcaticComment}
                 </p>
             </div>
+            
+            <!-- categories -->
+            {#if comment.categories && comment.categories.length > 0}
+                <div class="flex flex-wrap gap-1">
+                    {#each comment.categories as category}
+                        <span class="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                            {category}
+                        </span>
+                    {/each}
+                </div>
+            {/if}
         </div>
         
         <!-- like - pinned to bottom -->

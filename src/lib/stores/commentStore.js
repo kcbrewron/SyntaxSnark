@@ -27,11 +27,27 @@ const sortByLikes = (comments) => {
   return [...comments].sort((a, b) => b.likes - a.likes);
 };
 
+// Helper function to extract all unique categories from comments
+const extractCategories = (comments) => {
+  const categories = new Set();
+  
+  if (comments && comments.length > 0) {
+    comments.forEach(comment => {
+      if (comment.categories && Array.isArray(comment.categories)) {
+        comment.categories.forEach(category => categories.add(category));
+      }
+    });
+  }
+  
+  return ["All", ...Array.from(categories)].sort();
+};
+
 // Create the store with loading state
 const createCommentStore = () => {
   // Add loading state to track initialization
   const { subscribe, update, set } = writable({
     comments: [],
+    categories: ["All"],
     loading: false,
     error: null,
     likedItems: [] // Track liked items in the store too
@@ -57,10 +73,14 @@ const createCommentStore = () => {
 
         // Sort the results by likes in descending order
         const sortedResults = sortByLikes(results);
+        
+        // Extract categories
+        const categories = extractCategories(sortedResults);
 
         // Update store with fetched and sorted data
         update(state => ({
           comments: sortedResults,
+          categories: categories,
           loading: false,
           error: null,
           likedItems: likedItems
@@ -88,9 +108,45 @@ const createCommentStore = () => {
         // Add the comment then sort the array
         const updatedComments = sortByLikes([...state.comments, comment]);
         
+        // Update categories
+        const updatedCategories = extractCategories(updatedComments);
+        
         return {
           ...state,
-          comments: updatedComments
+          comments: updatedComments,
+          categories: updatedCategories
+        };
+      });
+    },
+    
+    // Get all available categories
+    getCategories: () => {
+      let categories = ["All"];
+      
+      update(state => {
+        categories = state.categories;
+        return state;
+      });
+      
+      return categories;
+    },
+    
+    // Filter comments by category
+    filterByCategory: (category) => {
+      if (!category || category === "All") {
+        return update(state => state);
+      }
+      
+      return update(state => {
+        const filteredComments = state.comments.filter(comment => 
+          comment.categories && 
+          Array.isArray(comment.categories) && 
+          comment.categories.includes(category)
+        );
+        
+        return {
+          ...state,
+          filteredComments
         };
       });
     },
@@ -203,6 +259,12 @@ export const commentStore = createCommentStore();
 export const sortedComments = derived(
   commentStore,
   $store => sortByLikes($store.comments)
+);
+
+// Create a derived store for categories
+export const categories = derived(
+  commentStore,
+  $store => $store.categories
 );
 
 // Auto-initialize the store if needed
