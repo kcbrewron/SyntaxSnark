@@ -78,7 +78,7 @@
 <div class="max-w-4xl mx-auto py-8">
     <div class="text-center mx-auto px-4 mb-6">
         <p
-            class="text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-md mx-auto"
+            class="text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-md md:w-3/4 sm:w-full mx-auto"
         >
             Generate snarky comments to brighten your day
         </p>
