@@ -23,15 +23,15 @@ export async function handle({ event, resolve }) {
       // Default policies
       "default-src 'self'",
       // Scripts - allow from same origin and with specific nonce
-      `script-src 'self' 'nonce-${nonce}'`, 
-      // Styles - allow from same origin with nonce
-      `style-src 'self' 'nonce-${nonce}'`,
+      `script-src 'self' 'nonce-${nonce}' 'unsafe-inline'`, 
+      // Styles - allow from same origin with nonce and unsafe-hashes for style attributes
+      `style-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-hashes'`,
       // Images - allow from same origin and data URLs
       "img-src 'self' data:",
       // Fonts - allow from same origin
       "font-src 'self'",
-      // Connect - only allow to same origin
-      "connect-src 'self'",
+      // Connect - only allow to same origin and cloudflare analytics
+      "connect-src 'self' https://*.cloudflareinsights.com",
       // Media - only allow from same origin
       "media-src 'self'",
       // Object - disallow all object/embed/applet
@@ -39,7 +39,7 @@ export async function handle({ event, resolve }) {
       // Frame - only allow from same origin
       "frame-src 'self'",
       // Worker - only allow from same origin
-      "worker-src 'self'",
+      "worker-src 'self' blob:",
       // Manifest - only allow from same origin
       "manifest-src 'self'",
       // Form actions - only allow to same origin
@@ -56,8 +56,8 @@ export async function handle({ event, resolve }) {
   // Cross-Origin Opener Policy
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
   
-  // Cross-Origin Embedder Policy
-  response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+  // Cross-Origin Embedder Policy - relaxed to allow analytics
+  response.headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
   
   // X-Content-Type-Options
   response.headers.set('X-Content-Type-Options', 'nosniff');
