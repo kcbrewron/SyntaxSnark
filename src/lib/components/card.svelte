@@ -60,7 +60,7 @@
         <div class="flex flex-col h-full justify-between p-4">
             <div class="space-y-4">
                 <!-- prompt -->
-                <div class="text-xl text-semibold text-blue-500">
+                <div class="text-xl text-semibold text-blue-800">
                     {comment.prompt || "No prompt provided"}
                 </div>
                 <!-- sarcastic comment-->

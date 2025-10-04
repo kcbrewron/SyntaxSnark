@@ -95,7 +95,7 @@
     />
 </svelte:head>
 
-<div class="max-w-4xl mx-auto py-8">
+<div class="max-w-7xl mx-auto py-8">
     <div class="text-center mx-auto px-4 mb-6">
         <p
             class="text-xl text-light-text-secondary dark:text-dark-text-secondary w-full md:w-3/4 sm:w-full mx-auto"
@@ -103,7 +103,7 @@
             Generate snarky comments to brighten your day
         </p>
     </div>
-    <div class="max-w-4xl mx-auto py-4">
+    <div class="max-w-7xl mx-auto py-4">
         <div class="text-center px-4 sm:mb-4 md:mb-6 space-y-4">
             <input
                 bind:value={prompt}
