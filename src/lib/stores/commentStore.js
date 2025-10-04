@@ -68,51 +68,28 @@ const createCommentStore = () => {
   return {
     subscribe,
     set,
-    
-    // Initialize store with data from API
-    initialize: async () => {
-      // Set loading state
-      update(state => ({ ...state, loading: true, error: null }));
-      
-      try {
-        const response = await fetch('/api');
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.status}`);
-        }
-        const {results} = await response.json();
-        const likedItems = getLikedItems();
 
-        // Normalize and sort the results
-        const normalizedResults = results.map(comment => normalizeComment(comment));
-        const sortedResults = sortByLikes(normalizedResults);
-        
-        // Extract categories
-        const categories = extractCategories(sortedResults);
+    // Initialize store with data from server load function
+    initializeFromData: (comments) => {
+      const likedItems = getLikedItems();
 
-        // Update store with fetched and sorted data
-        update(state => ({
-          comments: sortedResults,
-          categories: categories,
-          loading: false,
-          error: null,
-          likedItems: likedItems
-        }));
+      // Normalize and sort the comments
+      const normalizedResults = comments.map(comment => normalizeComment(comment));
+      const sortedResults = sortByLikes(normalizedResults);
 
-        return sortedResults;
-      } catch (error) {
-        console.error('Failed to initialize comment store:', error);
-        
-        // Update store with error
-        update(state => ({
-          ...state,
-          loading: false,
-          error: error.message,
-          likedItems: [],
-        }));
-        
-        return null;
-      }
+      // Extract categories
+      const categories = extractCategories(sortedResults);
+
+      // Update store with server data
+      set({
+        comments: sortedResults,
+        categories: categories,
+        loading: false,
+        error: null,
+        likedItems: likedItems
+      });
+
+      return sortedResults;
     },
     
     // Add a new comment
@@ -283,8 +260,3 @@ export const categories = derived(
   $store => $store.categories
 );
 
-// Auto-initialize the store if needed
-// You can remove this if you prefer to initialize manually
-if (typeof window !== 'undefined') {
-  commentStore.initialize();
-}

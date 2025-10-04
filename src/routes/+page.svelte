@@ -4,12 +4,21 @@
     import CardList from "../lib/components/cardList.svelte";
     import { commentStore } from '$lib/stores/commentStore';
 
+    // Receive data from server load function
+    let { data } = $props();
+
     let pageTitle = "SyntaxSnark - Sarcastic Code Comments";
     let prompt = $state("");
     let comments = $state([]);
-    let isLoading = $state(true);
+    let isLoading = $state(false);
     let error = $state(null);
 
+    // Initialize store with server-loaded data
+    onMount(() => {
+        if (data?.comments) {
+            commentStore.initializeFromData(data.comments);
+        }
+    });
 
     // Subscribe to the store and keep our local state in sync
     $effect(() => {
@@ -17,11 +26,6 @@
         comments = storeData.comments || [];
         isLoading = storeData.loading;
         error = storeData.error;
-    });
-
-    // Initialize the store when the component mounts
-    onMount(async () => {
-        await commentStore.initialize();
     });
 
     // Function to generate a new sarcastic comment
