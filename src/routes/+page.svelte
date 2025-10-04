@@ -53,14 +53,17 @@
             }
 
             const data = await response.json();
-            
+
+            // Extract the sarcasm object from the response
+            const sarcasticData = data.sarcasm || data;
+
             // Ensure we have a properly structured comment object
             const newComment = {
-                id: data.id || `temp-${Date.now()}`,
-                prompt: prompt, // Use the prompt we sent
-                sarcaticComment: data.sarcaticComment || data.sarcasticComment || data.comment || data.text || '',
-                categories: Array.isArray(data.categories) ? data.categories : [],
-                likes: typeof data.likes === 'number' ? data.likes : 0
+                id: sarcasticData.id || `temp-${Date.now()}`,
+                prompt: sarcasticData.prompt || prompt, // Use the prompt from response or fallback to what we sent
+                sarcaticComment: sarcasticData.sarcastic_comment || sarcasticData.sarcaticComment || sarcasticData.sarcasticComment || sarcasticData.comment || '',
+                categories: Array.isArray(sarcasticData.category) ? sarcasticData.category : (Array.isArray(sarcasticData.categories) ? sarcasticData.categories : []),
+                likes: typeof sarcasticData.likes === 'number' ? sarcasticData.likes : 0
             };
 
             // Add the new comment to the store
