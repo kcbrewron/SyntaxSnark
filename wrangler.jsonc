@@ -5,11 +5,14 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "syntax_snark",
-	"compatibility_date": "2025-03-03",
-	"pages_build_output_dir": ".svelte-kit/cloudflare",
-	
+	"compatibility_date": "2025-01-01",
+	"main": ".svelte-kit/cloudflare/_worker.js",
 	"observability": {
 		"enabled": true
+	},
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare/assets"
 	},
 	"services": [
     {
@@ -17,27 +20,4 @@
       "service": "ai-sarcasm-generator"
     }
   ]
-
-
-	/**
-	 * Environment Variables
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
-	/**
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
-
-	/**
-	 * Static Assets
-	 * https://developers.cloudflare.com/workers/static-assets/binding/
-	 */
-	// "assets": { "directory": "./public/", "binding": "ASSETS" },
-
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
-	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
 }

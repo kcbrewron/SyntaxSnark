@@ -27,8 +27,8 @@
 
 <div class="category-filter mb-4 px-4 sm:px-6">
     <div class="flex justify-between items-center mb-2">
-        <button 
-            class="text-blue-500 hover:text-blue-700 font-medium"
+        <button
+            class="text-blue-800 hover:text-blue-900 font-medium"
             onclick={toggleFilters}
         >
             {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -46,11 +46,11 @@
     
     {#if showFilters}
         <div class="flex flex-wrap gap-2 justify-center" transition:slide={{ duration: 300 }}>
-            {#each categories as category}
-                <button 
+            {#each categories || [] as category}
+                <button
                     class="px-3 py-1 rounded-full text-sm font-medium transition-colors
-                           {selectedCategory === category 
-                             ? 'bg-blue-500 text-white' 
+                           {selectedCategory === category
+                             ? 'bg-blue-800 text-white'
                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
                     onclick={() => selectCategory(category)}
                 >
